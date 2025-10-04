@@ -10,4 +10,11 @@ fun Application.configureRouting() {
             call.respondText("Hello World!")
         }
     }
+    routing {
+        route("/api/v1") {
+            get("/users") { }
+            get("/users/{id}") { }
+            post("/users") { }
+        }
+    }
 }

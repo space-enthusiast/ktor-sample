@@ -1,3 +1,4 @@
+import io.ktor.plugin.OpenApiPreview
 
 plugins {
     alias(libs.plugins.kotlin.jvm)
@@ -18,4 +19,20 @@ dependencies {
     implementation(libs.ktor.server.config.yaml)
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
+}
+
+ktor {
+    @OptIn(OpenApiPreview::class)
+    openApi {
+        title = "OpenAPI example"
+        version = "2.1"
+        summary = "This is a sample API"
+        description = "This is a longer description"
+        termsOfService = "https://example.com/terms/"
+        contact = "contact@example.com"
+        license = "Apache/1.0"
+
+        // Location of the generated specification (defaults to openapi/generated.json)
+        target = project.layout.buildDirectory.file("open-api.json")
+    }
 }
