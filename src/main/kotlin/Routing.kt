@@ -7,18 +7,9 @@ import io.ktor.server.routing.*
 
 fun Application.configureRouting() {
     routing {
-        get("/") {
-            call.respondText("Hello World!")
+        get("/user/{login}") {
+            val login = call.parameters["login"]
+            call.respondText { "Logged in as $login" }
         }
-    }
-    routing {
-        route("/api/v1") {
-            get("/users") { }
-            get("/users/{id}") { }
-            post("/users") { }
-        }
-    }
-    routing {
-        swaggerUI(path = "swagger", swaggerFile = "build/open-api.json")
     }
 }

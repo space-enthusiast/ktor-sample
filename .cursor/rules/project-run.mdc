@@ -1,0 +1,13 @@
+---
+alwaysApply: true
+---
+
+When running this Ktor project:
+1. Always cd to workspace root first: `cd $WORKSPACE_ROOT`
+2. Set JAVA_HOME temporarily by finding JDK path from .idea folder: `export JAVA_HOME=$(grep -r "javaHome" .idea/ | grep -oP 'javaHome="[^"]+' | cut -d'"' -f2 | sed 's|\$USER_HOME\$|'"$HOME"'|g' | head -1)`
+3. Run command: `./gradlew run`
+4. Never modify shell config files or add Java to PATH permanently
+5. ALWAYS VERIFY THE APPLICATION IS RUNNING
+    If it is not running, only diagnose and report the issue:
+    Check logs, JAVA_HOME, port conflicts, etc.
+    Do NOT take any corrective action. Do not modify configs, restart processes, or change settings.

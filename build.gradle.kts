@@ -38,3 +38,14 @@ ktor {
         target = project.layout.buildDirectory.file("open-api.json")
     }
 }
+
+tasks.register("runWithOpenApi") {
+    group = "application"
+
+    dependsOn("generateOpenApiDocs")
+    dependsOn("run")
+
+    tasks.named("run").configure {
+        mustRunAfter("generateOpenApiDocs")
+    }
+}
