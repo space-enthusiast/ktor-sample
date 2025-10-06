@@ -1,0 +1,115 @@
+### Test GET endpoint with path parameter
+GET http://localhost:8080/path/john
+
+### Test GET endpoint with path parameter (another example)
+GET http://localhost:8080/path/alice
+
+### Test GET endpoint with query parameters
+GET http://localhost:8080/query-parameters?price=100
+
+### Test GET endpoint with query parameters (another example)
+GET http://localhost:8080/query-parameters?price=299.99
+
+### Test POST endpoint with text in body
+POST http://localhost:8080/text-in-body
+
+Hello, this is a text body!
+
+### Test POST endpoint with text in body (JSON example)
+POST http://localhost:8080/text-in-body
+
+{
+  "message": "Hello from JSON",
+  "timestamp": "2025-10-06T12:00:00Z"
+}
+
+### Test POST endpoint with bytes in body (text representation)
+POST http://localhost:8080/bytes-in-body
+
+This will be sent as bytes
+
+### Test POST endpoint with asynchronous bytes processing
+POST http://localhost:8080/bytes-in-body/asynchronous
+
+Asynchronous byte processing test content
+
+### Test POST endpoint with asynchronous bytes processing (larger content)
+POST http://localhost:8080/bytes-in-body/asynchronous
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+
+### Test POST endpoint with file upload (asynchronous save)
+POST http://localhost:8080/bytes-in-body/asynchronous-save-file
+
+File content to be saved asynchronously
+
+### Test POST endpoint with object in body (all fields)
+POST http://localhost:8080/object-in-body
+Content-Type: application/json
+
+{
+  "intField": 42,
+  "stringField": "Hello World",
+  "nullableIntField": 100,
+  "nullableStringField": "Optional value"
+}
+
+### Test POST endpoint with object in body (with null fields)
+POST http://localhost:8080/object-in-body
+Content-Type: application/json
+
+{
+  "intField": 123,
+  "stringField": "Required string",
+  "nullableIntField": null,
+  "nullableStringField": null
+}
+
+### Test POST endpoint with object in body (omitting nullable fields)
+POST http://localhost:8080/object-in-body
+Content-Type: application/json
+
+{
+  "intField": 999,
+  "stringField": "Another example"
+}
+
+### Test POST endpoint with form upload
+POST http://localhost:8080/form-parameters
+Content-Type: application/x-www-form-urlencoded
+
+username=JetBrains&email=example@jetbrains.com&password=foobar&confirmation=foobary
+
+### Test POST endpoint with multipart form data (text content)
+POST http://localhost:8080/multipart-form-data
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="fileDescription"
+
+This is a test file description
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="test.txt"
+Content-Type: text/plain
+
+Hello, this is the content of the test file!
+It can have multiple lines.
+--WebAppBoundary--
+
+
+### Test POST endpoint with multipart form data (using file reference)
+POST http://localhost:8080/multipart-form-data
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="fileDescription"
+
+Uploading from a local file
+--WebAppBoundary
+Content-Disposition: form-data; name="file"; filename="example.txt"
+Content-Type: text/plain
+
+< ./test.http
+--WebAppBoundary--
