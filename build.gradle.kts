@@ -45,10 +45,6 @@ ktor {
 tasks.register("runWithOpenApi") {
     group = "application"
 
-    dependsOn("generateOpenApiDocs")
-    dependsOn("run")
-
-    tasks.named("run").configure {
-        mustRunAfter("generateOpenApiDocs")
-    }
+    dependsOn("buildOpenApi")
+    finalizedBy("run")
 }
