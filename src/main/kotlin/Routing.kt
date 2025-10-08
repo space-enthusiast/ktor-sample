@@ -29,32 +29,102 @@ data class ObjectA(
 
 fun Application.configureRouting() {
     routing {
+        /**
+         * path parameter example api
+         *
+         * @path parameter path parameter that is a string
+         */
         get("/path/{parameter}") {
             val parameter = call.parameters["parameter"]
             call.respondText { "path parameter is: $parameter" }
         }
 
-        get("/query-parameters") {
-            val price = call.request.queryParameters["price"]
-            call.respondText { "query parameter is $price" }
+        /**
+         * Multiple path parameters example
+         *
+         * @path parameter First path parameter
+         * @path parameter2 Second path parameter
+         */
+        get("/path/{parameter}/{parameter2}") {
+            val parameter = call.parameters["parameter"]
+            val parameter2 = call.parameters["parameter2"]
+            call.respondText {
+                "path parameter is: $parameter and parameter2 is: $parameter2"
+            }
         }
 
+        /**
+         * Query parameter example with optional parameter
+         *
+         * @param parameter1 Optional string parameter
+         */
+        get("/query-parameter") {
+            val parameter1 = call.request.queryParameters["parameter1"]
+            call.respondText { "query parameters is: $parameter1" }
+        }
+
+        /**
+         * Query parameters example with multiple parameters
+         *
+         * @query parameter1 parameter1 of example api
+         * @query parameter2 parameter2 of example api
+         * @query parameter3 parameter3 of example api
+         * @query parameter4 parameter4 of example api
+         * @query parameter5 parameter5 of example api
+         */
+        get("/query-parameters") {
+            val parameter1 = call.request.queryParameters["parameter1"]
+            val parameter2 = call.request.queryParameters["parameter2"]
+            val parameter3 = call.request.queryParameters["parameter3"]!!
+            val parameter4 = call.request.queryParameters["parameter4"]!!.toLong()
+            val parameter5 = call.request.queryParameters["parameter5"]?.toLong()
+            call.respondText {
+                """
+                    query parameter1 is: $parameter1
+                    query parameter2 is: $parameter2
+                    query parameter3 is: $parameter3
+                    query parameter4 is: $parameter4
+                    query parameter5 is: $parameter5
+                """.trimIndent()
+            }
+        }
+
+        /**
+         * Receive text in request body
+         *
+         * @body Plain text content
+         */
         post("/text-in-body") {
             val text = call.receiveText()
             call.respondText { "text in body is: $text" }
         }
 
+        /**
+         * Receive bytes in request body
+         *
+         * @body Byte array content
+         */
         post("/bytes-in-body") {
             val bytes = call.receive<ByteArray>()
             call.respond { String(bytes) }
         }
 
+        /**
+         * Receive bytes asynchronously using channels
+         *
+         * @body Stream of bytes
+         */
         post("/bytes-in-body/asynchronous") {
             val readChannel = call.receiveChannel()
             val text = readChannel.readRemaining().readText()
             call.respondText{ "text in body is: $text" }
         }
 
+        /**
+         * Receive bytes asynchronously and save to file
+         *
+         * @body Stream of bytes to save
+         */
         post("/bytes-in-body/asynchronous-save-file") {
             val file = File("temp/file.txt")
             file.parentFile?.mkdirs() // Create parent directories if they don't exist
@@ -64,16 +134,31 @@ fun Application.configureRouting() {
             call.respondText("File uploaded to: $absolutePath\nFile exists: $fileExists")
         }
 
+        /**
+         * Receive JSON object in request body
+         *
+         * @body ObjectA JSON object with int and string fields
+         */
         post("/object-in-body") {
             val objectA = call.receive<ObjectA>()
             call.respondText { "object is received: $objectA" }
         }
 
+        /**
+         * Receive form parameters from request body
+         *
+         * @body application/x-www-form-urlencoded form data
+         */
         post("/form-parameters") {
             val formParameters = call.receiveParameters().entries()
             call.respondText { "form parameters: ${formParameters.joinToString()}" }
         }
 
+        /**
+         * Upload file with multipart form data
+         *
+         * @body multipart/form-data with file and description fields
+         */
         post("/multipart-form-data") {
             var fileDescription = ""
             var fileName = ""
