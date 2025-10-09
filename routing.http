@@ -111,5 +111,5 @@ Uploading from a local file
 Content-Disposition: form-data; name="file"; filename="example.txt"
 Content-Type: text/plain
 
-< ./test.http
+< ./routing.http
 --WebAppBoundary--
