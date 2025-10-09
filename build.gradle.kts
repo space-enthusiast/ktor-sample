@@ -22,6 +22,7 @@ dependencies {
     implementation("io.ktor:ktor-server-swagger:3.3.0")
     implementation("io.ktor:ktor-server-content-negotiation:3.3.0")
     implementation("io.ktor:ktor-serialization-kotlinx-json:3.3.0")
+    implementation("io.ktor:ktor-server-resources:3.3.0")
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
 }
